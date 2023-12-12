@@ -77,9 +77,15 @@ public class AlgoJet {
     public void initializeFlightGraph(List<Flight> flights) {
 
 		for (Flight flight : flights) {
-			// gets rid of nullPointerException
-			graph.computeIfAbsent(flight.getSource(), k -> new HashMap<>());
-			graph.computeIfAbsent(flight.getDestination(), k -> new HashMap<>());
+			String source = flight.getSource();
+	        String destination = flight.getDestination();
+
+	        if (!graph.containsKey(source)) {
+	            graph.put(source, new HashMap<>());
+	        }
+	        if (!graph.containsKey(destination)) {
+	            graph.put(destination, new HashMap<>());
+	        }
 
 			// add both directions
 			graph.get(flight.getSource()).put(flight.getDestination(), flight.getPrice());
